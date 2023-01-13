@@ -3,37 +3,124 @@ package com.springframework.recipeapp.model;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 
 @Entity
 public class Recipe {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String recipeName;
+
+    private String description;
+    private String prepTime;
+    private String cookTime;
+    private String servings;
+    private String source;
+    private String url;
+    private String directions;
+
+    @Lob // BLOB
+    private Byte[] image;
+
+    @OneToOne
+    private Difficulty difficulty;
+
+    @OneToOne (cascade = CascadeType.ALL)
+    private Notes notes;
+
     @OneToMany
-    @JoinColumn(name="ingredient_id")
     private Set<Ingredient> ingredients = new HashSet<>();
+//    private Category category;
 
-    public Recipe() {
-    }
-
-    public Recipe(String recipeName) {
-        this.recipeName = recipeName;
-    }
 
     public Long getId() {
         return id;
     }
 
-    public String getRecipeName() {
-        return recipeName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setRecipeName(String recipeName) {
-        this.recipeName = recipeName;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPrepTime() {
+        return prepTime;
+    }
+
+    public void setPrepTime(String prepTime) {
+        this.prepTime = prepTime;
+    }
+
+    public String getCookTime() {
+        return cookTime;
+    }
+
+    public void setCookTime(String cookTime) {
+        this.cookTime = cookTime;
+    }
+
+    public String getServings() {
+        return servings;
+    }
+
+    public void setServings(String servings) {
+        this.servings = servings;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getDirections() {
+        return directions;
+    }
+
+    public void setDirections(String directions) {
+        this.directions = directions;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Byte[] image) {
+        this.image = image;
+    }
+
+    public Notes getNotes() {
+        return notes;
+    }
+
+    public void setNotes(Notes notes) {
+        this.notes = notes;
     }
 
     public Set<Ingredient> getIngredients() {
@@ -42,25 +129,5 @@ public class Recipe {
 
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-
-        Recipe recipe = (Recipe) obj;
-
-        return Objects.equals(id, recipe.id);
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
     }
 }
