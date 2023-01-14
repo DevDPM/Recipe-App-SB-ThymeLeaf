@@ -13,9 +13,6 @@ public class UnitOfMeasure {
     @OneToOne
     private Ingredient ingredient;
 
-    public UnitOfMeasure() {
-    }
-
     public Long getId() {
         return id;
     }

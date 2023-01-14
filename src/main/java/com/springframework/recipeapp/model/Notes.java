@@ -16,9 +16,6 @@ public class Notes {
     @Lob
     private String recipeNotes;
 
-    public Notes() {
-    }
-
     public Long getId() {
         return id;
     }
