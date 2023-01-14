@@ -1,7 +1,10 @@
 package com.springframework.recipeapp.service;
 
-import com.springframework.recipeapp.repositories.RecipeRepository;
+import com.springframework.recipeapp.model.Recipe;
 
-public interface RecipeService extends RecipeRepository {
+import java.util.Set;
 
+public interface RecipeService {
+
+    Set<Recipe> getRecipes();
 }
