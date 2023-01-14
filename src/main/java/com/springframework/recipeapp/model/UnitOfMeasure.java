@@ -26,4 +26,8 @@ public class UnitOfMeasure {
         this.unit = unit;
     }
 
+    @Override
+    public String toString() {
+        return unit;
+    }
 }

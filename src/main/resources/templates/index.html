@@ -7,6 +7,36 @@
 <body>
 
 <h1>My recipes</h1>
+<table>
+    <thead>
+        <tr>
+            <td style="width: 5%">ID</td>
+            <td style="width: 20%">Recipe</td>
+            <td style="width: 10%">Cook time</td>
+            <td style="width: 10%">Servings</td>
+            <td style="width: 10%">Difficulty</td>
+            <td>Ingredients</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="border-top-width: 1px; vertical-align:top" th:each="recipe : ${recipeList}">
+            <td th:text="${recipe.getId()}"></td>
+            <td th:text="${recipe.getDescription()}"></td>
+            <td th:text="${recipe.getCookTime()}"></td>
+            <td th:text="${recipe.getServings()}"></td>
+            <td th:text="${recipe.getDifficulty()}"></td>
+            <td>
+                <table>
+                    <tr style="border-width: 0px" th:each="ingredient : ${recipe.getIngredients()}">
+                        <td th:text="${ingredient.getAmount()}"></td>
+                        <td th:text="${ingredient.getUnitOfMeasure().getUnit()}"></td>
+                        <td th:text="${ingredient.getDescription()}"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 </body>
 </html>

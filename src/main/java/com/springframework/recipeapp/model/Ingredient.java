@@ -60,4 +60,9 @@ public class Ingredient {
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
+
+    @Override
+    public String toString() {
+        return "* " + amount + " " + unitOfMeasure + " of " + description + "\n";
+    }
 }
