@@ -30,8 +30,9 @@ public class Recipe {
     @OneToOne (cascade = CascadeType.ALL)
     private Notes notes;
 
-    @OneToMany
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients = new HashSet<>();
+
 //    private Category category;
 
 
