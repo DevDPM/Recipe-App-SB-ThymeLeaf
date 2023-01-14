@@ -1,6 +1,10 @@
 package com.springframework.recipeapp.model;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class UnitOfMeasure {
@@ -9,9 +13,6 @@ public class UnitOfMeasure {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String unit;
-
-    @OneToOne
-    private Ingredient ingredient;
 
     public Long getId() {
         return id;
@@ -25,11 +26,4 @@ public class UnitOfMeasure {
         this.unit = unit;
     }
 
-    public Ingredient getIngredient() {
-        return ingredient;
-    }
-
-    public void setIngredient(Ingredient ingredient) {
-        this.ingredient = ingredient;
-    }
 }
