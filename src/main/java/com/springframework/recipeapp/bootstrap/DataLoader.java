@@ -5,6 +5,7 @@ import com.springframework.recipeapp.model.constant.Difficulty;
 import com.springframework.recipeapp.repositories.CategoryRepository;
 import com.springframework.recipeapp.repositories.RecipeRepository;
 import com.springframework.recipeapp.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Component
+@Slf4j
 public class DataLoader implements CommandLineRunner {
 
     private final CategoryRepository categoryRepository;
@@ -29,7 +31,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+        log.debug("Bootstrap items being added");
         Recipe recipe = new Recipe();
 
         Set<Category> categoryList = new HashSet<>();
@@ -149,7 +151,7 @@ public class DataLoader implements CommandLineRunner {
         recipeRepository.save(recipe2);
         categoryList.clear();
 
-
+        log.debug("Bootstrap items added & saved");
 
     }
     private void CreateRecipe(Recipe recipe, String cookTime, String prepTime, String servings, Difficulty difficulty,
