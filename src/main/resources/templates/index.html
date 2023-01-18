@@ -2,41 +2,51 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Recipes</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
 </head>
 <body>
 
-<h1>My recipes</h1>
-<table>
-    <thead>
-        <tr>
-            <td style="width: 5%">ID</td>
-            <td style="width: 20%">Recipe</td>
-            <td style="width: 10%">Cook time</td>
-            <td style="width: 10%">Servings</td>
-            <td style="width: 10%">Difficulty</td>
-            <td>Ingredients</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr style="border-top-width: 1px; vertical-align:top" th:each="recipe : ${recipeList}">
-            <td th:text="${recipe.getId()}"></td>
-            <td th:text="${recipe.getDescription()}"></td>
-            <td th:text="${recipe.getCookTime()}"></td>
-            <td th:text="${recipe.getServings()}"></td>
-            <td th:text="${recipe.getDifficulty()}"></td>
-            <td>
-                <table>
-                    <tr style="border-width: 0px" th:each="ingredient : ${recipe.getIngredients()}">
-                        <td th:text="${ingredient.getAmount()}"></td>
-                        <td th:text="${ingredient.getUnitOfMeasure().getUnit()}"></td>
-                        <td th:text="${ingredient.getDescription()}"></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div style="margin-top: 20px" class="container p-3 mb-2 bg-light text-dark rounded">
+    <div class="snippet-container p-3 mb-2 bg-dark text-white rounded">
+    <h1 style="margin: 2%">My recipe!</h1>
+    </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th style="width: 5%">ID</th>
+                <th style="width: 20%">Recipe</th>
+                <th style="width: 10%">Cook time</th>
+                <th style="width: 10%">Servings</th>
+                <th style="width: 10%">Difficulty</th>
+                <th>Ingredients</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style="border-top-width: 1px; vertical-align:top" th:each="recipe : ${recipeList}">
+                <td th:text="${recipe.getId()}"></td>
+                <td th:text="${recipe.getDescription()}"></td>
+                <td th:text="${recipe.getCookTime()}"></td>
+                <td th:text="${recipe.getServings()}"></td>
+                <td th:text="${recipe.getDifficulty()}"></td>
+                <td>
+                    <table>
+                        <tr style="border-width: 0px" th:each="ingredient : ${recipe.getIngredients()}">
+                            <td th:text="${ingredient.getAmount()}"></td>
+                            <td th:text="${ingredient.getUnitOfMeasure().getUnit()}"></td>
+                            <td th:text="${ingredient.getDescription()}"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 
 </body>
 </html>
