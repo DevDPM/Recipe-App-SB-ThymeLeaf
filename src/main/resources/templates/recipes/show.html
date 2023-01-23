@@ -75,7 +75,7 @@
                                 <h5>URL:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p th:text="${recipe.getURL}">https://www.example.com/</p>
+                                <p th:text="${recipe.getUrl()}">https://www.example.com/</p>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                         <div class="panel-body">
                             <div class="col-md-12">
                                 <ul th:each="ingredient : ${recipe.getIngredients()}">
-                                    <il th:text="${ingredient.getAmount()} ${ingredient.getUnitOfMeasure.getUnit()} of ${ingredient.getDescription}">1 Cup of ingredient</il>
+                                    <il th:text="${ingredient.getAmount()} ${ingredient.getUnitOfMeasure().getUnit()} ${ingredient.getDescription()}">1 Cup of ingredient</il>
                                 </ul>
                             </div>
                         </div>
@@ -107,7 +107,7 @@
                         <h1 class="panel-title">Notes</h1>
                         <div class="panel-body">
                             <div class="col-md-12">
-                                <p>Additional notes</p>
+                                <p th:text="${recipe.getNotes()}">Additional notes</p>
                             </div>
                         </div>
                     </div>
