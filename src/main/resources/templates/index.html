@@ -23,27 +23,16 @@
             <tr>
                 <th style="width: 3%">ID</th>
                 <th style="width: 18%">Recipe</th>
-                <th style="width: 14%">Cook time</th>
-                <th style="width: 10%">Servings</th>
-                <th style="width: 10%">Difficulty</th>
-                <th>Ingredients</th>
+                <th style="width: 14%"></th>
             </tr>
             </thead>
             <tbody>
             <tr style="border-top-width: 1px; vertical-align:top" th:each="recipe : ${recipeList}">
                 <td th:text="${recipe.getId()}"></td>
                 <td th:text="${recipe.getDescription()}"></td>
-                <td th:text="${recipe.getCookTime()}"></td>
-                <td th:text="${recipe.getServings()}"></td>
-                <td th:text="${recipe.getDifficulty()}"></td>
+                <td><a th:href="@{/recipe/show/{id}(id=${recipe.getId()})}">View</a></td>
+
                 <td>
-                    <table>
-                        <tr style="border-width: 0px" th:each="ingredient : ${recipe.getIngredients()}">
-                            <td th:text="${ingredient.getAmount()}"></td>
-                            <td th:text="${ingredient.getUnitOfMeasure().getUnit()}"></td>
-                            <td th:text="${ingredient.getDescription()}"></td>
-                        </tr>
-                    </table>
                 </td>
             </tr>
             </tbody>
