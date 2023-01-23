@@ -20,10 +20,15 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Override
     public Set<Recipe> getRecipes() {
-        log.debug("I'm the RecipeServiceImpl ");
 
         Set<Recipe> recipeSet = new HashSet<>();
         recipeRepository.findAll().iterator().forEachRemaining(recipe -> { recipeSet.add(recipe); });
         return recipeSet;
+    }
+
+    @Override
+    public Recipe getRecipeById(Long id) {
+//        return Optional.ofNullable(recipeRepository.findById(id)).get().get(); // can be more sophisticated
+        return recipeRepository.findById(id).orElse(null);
     }
 }
