@@ -1,7 +1,7 @@
 package com.springframework.recipeapp.service;
 
 import com.springframework.recipeapp.model.Recipe;
-import com.springframework.recipeapp.repositories.RecipeRepository;
+import com.springframework.recipeapp.repository.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

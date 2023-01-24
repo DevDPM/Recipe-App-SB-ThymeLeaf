@@ -2,9 +2,9 @@ package com.springframework.recipeapp.bootstrap;
 
 import com.springframework.recipeapp.model.*;
 import com.springframework.recipeapp.model.constant.Difficulty;
-import com.springframework.recipeapp.repositories.CategoryRepository;
-import com.springframework.recipeapp.repositories.RecipeRepository;
-import com.springframework.recipeapp.repositories.UnitOfMeasureRepository;
+import com.springframework.recipeapp.repository.CategoryRepository;
+import com.springframework.recipeapp.repository.RecipeRepository;
+import com.springframework.recipeapp.repository.UnitOfMeasureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
