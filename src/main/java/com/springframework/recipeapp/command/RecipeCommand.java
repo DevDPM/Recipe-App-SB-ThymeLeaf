@@ -1,5 +1,8 @@
 package com.springframework.recipeapp.command;
 
+import com.springframework.recipeapp.model.Category;
+import com.springframework.recipeapp.model.Ingredient;
+import com.springframework.recipeapp.model.Notes;
 import com.springframework.recipeapp.model.constant.Difficulty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +24,10 @@ public class RecipeCommand {
     private String source;
     private String url;
     private String directions;
+    private Notes notes;
     private Difficulty difficulty;
-    private Set<IngredientCommand> ingredients = new HashSet<>();
-    private Set<CategoryCommand> categories = new HashSet<>();
+    private Set<Ingredient> ingredients = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();
+    private Byte[] image;
 
 }
