@@ -1,6 +1,5 @@
 package com.springframework.recipeapp.command;
 
-import com.springframework.recipeapp.model.Recipe;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,5 +13,5 @@ public class CategoryCommand {
 
     private Long id;
     private String description;
-    private Set<Recipe> recipes;
+    private Set<RecipeCommand> recipes;
 }
