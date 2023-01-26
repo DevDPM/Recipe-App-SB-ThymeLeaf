@@ -61,7 +61,7 @@ class RecipeControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/recipe/show/" + ID))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("recipe/show"));
+                .andExpect(MockMvcResultMatchers.view().name("recipes/show"));
     }
 }
 

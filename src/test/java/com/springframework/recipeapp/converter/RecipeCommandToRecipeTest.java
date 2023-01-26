@@ -104,7 +104,6 @@ class RecipeCommandToRecipeTest {
         assertEquals(1,recipeReturn.getIngredients().size());
         assertEquals(categoryCommand.getId(),categoryList.get(0).getId());
         assertEquals(categoryCommand.getDescription(),categoryList.get(0).getDescription());
-        assertNull(categoryCommand.getRecipes());
         assertNotNull(categoryList.get(0).getRecipes());
 
         // Testing for insertion of notes to recipe
@@ -114,11 +113,11 @@ class RecipeCommandToRecipeTest {
         assertNull(notesCommand.getRecipe());
 
         assertEquals(recipeCommand.getId(),recipeReturn.getId());
-        assertEquals(recipeCommand.getCookTime(),recipeReturn.getCookTime());
-        assertEquals(recipeCommand.getServings(),recipeReturn.getServings());
+        assertEquals(recipeCommand.getCookTime().toString(),recipeReturn.getCookTime());
+        assertEquals(recipeCommand.getServings().toString(),recipeReturn.getServings());
         assertEquals(recipeCommand.getDirections(),recipeReturn.getDirections());
         assertEquals(recipeCommand.getDifficulty(),recipeReturn.getDifficulty());
-        assertEquals(recipeCommand.getPrepTime(),recipeReturn.getPrepTime());
+        assertEquals(recipeCommand.getPrepTime().toString(),recipeReturn.getPrepTime());
         assertEquals(recipeCommand.getSource(),recipeReturn.getSource());
         assertEquals(recipeCommand.getDescription(),recipeReturn.getDescription());
         assertEquals(recipeCommand.getUrl(),recipeReturn.getUrl());

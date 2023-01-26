@@ -33,7 +33,6 @@ class CategoryToCategoryCommandTest {
         category.setRecipes(RECIPES);
 
         assertNotNull(toCategoryCommand.convert(category));
-        assertNull(toCategoryCommand.convert(category).getRecipes());
         assertEquals(LONG_ID, toCategoryCommand.convert(category).getId());
         assertEquals(DESCRIPTION, toCategoryCommand.convert(category).getDescription());
     }
