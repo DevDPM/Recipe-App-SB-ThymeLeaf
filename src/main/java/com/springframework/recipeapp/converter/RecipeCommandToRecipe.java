@@ -16,16 +16,16 @@ import java.util.Set;
 @Component
 public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
 
-    private final CategoryCommandToCategory categoryConverter;
-    private final IngredientCommandToIngredient ingredientConverter;
-    private final NotesCommandToNotes notesConverter;
+    private final CategoryCommandToCategory toCategory;
+    private final IngredientCommandToIngredient toIngredient;
+    private final NotesCommandToNotes toNotes;
 
-    public RecipeCommandToRecipe(CategoryCommandToCategory categoryConverter,
-                                 IngredientCommandToIngredient ingredientConverter,
-                                 NotesCommandToNotes notesConverter) {
-        this.categoryConverter = categoryConverter;
-        this.ingredientConverter = ingredientConverter;
-        this.notesConverter = notesConverter;
+    public RecipeCommandToRecipe(CategoryCommandToCategory toCategory,
+                                 IngredientCommandToIngredient toIngredient,
+                                 NotesCommandToNotes toNotes) {
+        this.toCategory = toCategory;
+        this.toIngredient = toIngredient;
+        this.toNotes = toNotes;
     }
 
     @Synchronized
@@ -43,15 +43,15 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
             source.getIngredients()
                     .stream()
                     .forEach(ingredientCommand -> {
-                        Ingredient ingredient = ingredientConverter.convert(ingredientCommand);
+                        Ingredient ingredient = toIngredient.convert(ingredientCommand);
                         ingredient.setRecipe(recipe);
                         ingredients.add(ingredient);
             });
         }
         recipe.setIngredients(ingredients);
 
-        if (notesConverter.convert(source.getNotes()) != null) {
-            Notes notes = notesConverter.convert(source.getNotes());
+        if (toNotes.convert(source.getNotes()) != null) {
+            Notes notes = toNotes.convert(source.getNotes());
             notes.setRecipe(recipe);
             recipe.setNotes(notes);
         }
@@ -61,7 +61,11 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
             source.getCategories()
                     .stream()
                     .forEach(category -> {
-                        categories.add(categoryConverter.convert(category));
+                        Category categoryReturn = toCategory.convert(category);
+                        Set<Recipe> setRecipe = new HashSet<>();
+                        setRecipe.add(recipe);
+                        categoryReturn.setRecipes(setRecipe);
+                        categories.add(categoryReturn);
                     });
         }
         recipe.setCategories(categories);
