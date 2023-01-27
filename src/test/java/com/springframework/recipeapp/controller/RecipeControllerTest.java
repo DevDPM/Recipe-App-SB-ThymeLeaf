@@ -59,7 +59,7 @@ class RecipeControllerTest {
         // MockMVC tests
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/recipe/show/" + ID))
+        mockMvc.perform(MockMvcRequestBuilders.get("/recipe/" + ID + "show/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("recipes/show"));
     }
