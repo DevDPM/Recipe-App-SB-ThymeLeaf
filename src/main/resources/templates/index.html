@@ -23,7 +23,8 @@
             <tr>
                 <th style="width: 3%">ID</th>
                 <th style="width: 18%">Recipe</th>
-                <th style="width: 14%"></th>
+                <th style="width: 14%">View</th>
+                <th style="width: 14%">Update</th>
             </tr>
             </thead>
             <tbody>
@@ -31,6 +32,7 @@
                 <td th:text="${recipe.getId()}"></td>
                 <td th:text="${recipe.getDescription()}"></td>
                 <td><a th:href="@{/recipe/{id}/show(id=${recipe.getId()})}">View</a></td>
+                <td><a th:href="@{/recipe/{id}/update(id=${recipe.getId()})}">Update</a></td>
 
                 <td>
                 </td>

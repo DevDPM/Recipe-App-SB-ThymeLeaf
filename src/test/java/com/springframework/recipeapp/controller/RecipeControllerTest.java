@@ -95,15 +95,20 @@ class RecipeControllerTest {
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/recipe/" + ID + "/show"));
     }
 
-//    @Test
-//    void testGetUpdateView() {
-//        String ID = "1";
-//        RecipeCommand command = new RecipeCommand();
-//        command.setId(Long.parseLong(ID));
-//
-//        when(recipeService.findCommandById())
-//
-//    }
+    @Test
+    void testGetUpdateView() throws Exception {
+        String ID = "1";
+        RecipeCommand command = new RecipeCommand();
+        command.setId(Long.parseLong(ID));
+
+        when(recipeService.findCommandById(Long.parseLong(ID))).thenReturn(command);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/recipe/" + ID + "/update"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("recipe/recipeform"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("recipe"));
+
+    }
 }
 
 

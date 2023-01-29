@@ -7,6 +7,7 @@ import com.springframework.recipeapp.model.Recipe;
 import com.springframework.recipeapp.repository.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,21 +39,17 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public Recipe getRecipeById(Long id) {
 //        return Optional.ofNullable(recipeRepository.findById(id)).get().get(); // can be more sophisticated
-        return recipeRepository.findById(id).orElse(null);
+        return recipeRepository.findById(id).orElseThrow(() -> new RuntimeException("Recipe not found!"));
     }
 
     @Override
+    @Transactional
     public RecipeCommand findCommandById(Long id) {
-        Recipe recipeReturn = getRecipeById(id);
-        RecipeCommand recipeCommand = null;
-
-        if (recipeReturn != null)
-            recipeCommand = toRecipeCommand.convert(recipeReturn);
-
-        return recipeCommand;
+        return toRecipeCommand.convert(getRecipeById(id));
     }
 
     @Override
+    @Transactional
     public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
         if (recipeCommand == null)
             return null;
