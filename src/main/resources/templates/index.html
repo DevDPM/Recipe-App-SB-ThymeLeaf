@@ -30,7 +30,7 @@
             <tr style="border-top-width: 1px; vertical-align:top" th:each="recipe : ${recipeList}">
                 <td th:text="${recipe.getId()}"></td>
                 <td th:text="${recipe.getDescription()}"></td>
-                <td><a th:href="@{/recipe/show/{id}(id=${recipe.getId()})}">View</a></td>
+                <td><a th:href="@{/recipe/{id}/show(id=${recipe.getId()})}">View</a></td>
 
                 <td>
                 </td>

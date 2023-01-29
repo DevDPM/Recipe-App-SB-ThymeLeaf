@@ -54,6 +54,9 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Override
     public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
+        if (recipeCommand == null)
+            return null;
+
         Recipe recipeReturn = toRecipe.convert(recipeCommand);
         Recipe recipeSaved = recipeRepository.save(recipeReturn);
         RecipeCommand recipeCommandReturn = toRecipeCommand.convert(recipeSaved);
@@ -62,7 +65,15 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public RecipeCommand deleteRecipe(RecipeCommand recipeCommand) {
-        return null;
+    public void deleteRecipe(RecipeCommand recipeCommand) {
+        if (recipeCommand == null)
+            return;
+
+        Recipe recipeReturn = toRecipe.convert(recipeCommand);
+        if (recipeReturn == null)
+            return;
+
+        recipeRepository.delete(recipeReturn);
+
     }
 }
