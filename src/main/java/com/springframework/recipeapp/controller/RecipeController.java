@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Slf4j
-@RequestMapping({"/recipe","/recipe/"})
 public class RecipeController {
 
     private final RecipeService recipeService;
@@ -19,7 +18,7 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @RequestMapping("/{id}/show")
+    @RequestMapping("/recipe/{id}/show")
     public String getRecipeByIdPage(@PathVariable String id, Model model) {
 
         Recipe recipe = recipeService.getRecipeById(Long.parseLong(id));
@@ -30,7 +29,7 @@ public class RecipeController {
     }
 
     @GetMapping
-    @RequestMapping("/new")
+    @RequestMapping("/recipe/new")
     public String newRecipe(Model model) {
         model.addAttribute("recipe", new RecipeCommand());
 
@@ -38,7 +37,7 @@ public class RecipeController {
     }
 
     @GetMapping
-    @RequestMapping("/{id}/update")
+    @RequestMapping("/recipe/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model) {
         RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(id));
         model.addAttribute("recipe",recipeCommand);
@@ -47,6 +46,7 @@ public class RecipeController {
     }
 
     @PostMapping
+    @RequestMapping("/recipe")
     public String saveOrUpdate(@ModelAttribute RecipeCommand recipeCommand) {
         RecipeCommand recipeCommandReturn = recipeService.saveRecipeCommand(recipeCommand);
 
