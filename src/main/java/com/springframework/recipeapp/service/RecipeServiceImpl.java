@@ -60,4 +60,9 @@ public class RecipeServiceImpl implements RecipeService{
 
         return recipeCommandReturn;
     }
+
+    @Override
+    public RecipeCommand deleteRecipe(RecipeCommand recipeCommand) {
+        return null;
+    }
 }
