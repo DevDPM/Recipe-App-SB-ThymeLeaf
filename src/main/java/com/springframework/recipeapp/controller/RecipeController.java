@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Slf4j
+@RequestMapping("/recipe")
 public class RecipeController {
 
     private final RecipeService recipeService;
@@ -18,7 +19,7 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @RequestMapping("/recipe/{id}/show")
+    @RequestMapping("/{id}/show")
     public String getRecipeByIdPage(@PathVariable String id, Model model) {
 
         Recipe recipe = recipeService.getRecipeById(Long.parseLong(id));
@@ -29,7 +30,7 @@ public class RecipeController {
     }
 
     @GetMapping
-    @RequestMapping("/recipe/new")
+    @RequestMapping("/new")
     public String newRecipe(Model model) {
         model.addAttribute("recipe", new RecipeCommand());
 
@@ -37,7 +38,7 @@ public class RecipeController {
     }
 
     @GetMapping
-    @RequestMapping("/recipe/{id}/update")
+    @RequestMapping("/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model) {
         RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(id));
         model.addAttribute("recipe",recipeCommand);
@@ -46,10 +47,16 @@ public class RecipeController {
     }
 
     @PostMapping
-    @RequestMapping("/recipe")
     public String saveOrUpdate(@ModelAttribute RecipeCommand recipeCommand) {
         RecipeCommand recipeCommandReturn = recipeService.saveRecipeCommand(recipeCommand);
 
         return "redirect:/recipe/" + recipeCommandReturn.getId() + "/show";
+    }
+
+    @GetMapping("{id}/delete")
+    public String deleteRecipe(@PathVariable String id) {
+        recipeService.deleteRecipeById(Long.valueOf(id));
+
+        return "redirect:/";
     }
 }

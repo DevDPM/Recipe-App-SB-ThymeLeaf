@@ -39,9 +39,9 @@ public class DataLoader implements CommandLineRunner {
         categoryList.add(categoryRepository.findByDescription("Mexican").get());
         categoryList.add(categoryRepository.findByDescription("Fast Food").get());
         CreateRecipe(recipe,
-                "15 min",
-                "20 min",
-                "4 to 6 servings",
+                "15",
+                "20",
+                "4",
                 Difficulty.MEDIUM,
                 "Spicy Grilled Chicken Tacos",
                 "Directions?",
@@ -99,9 +99,9 @@ public class DataLoader implements CommandLineRunner {
         categoryList2.add(categoryRepository.findByDescription("Italian").get());
         categoryList2.add(categoryRepository.findByDescription("Healthy Food").get());
         CreateRecipe(recipe2,
-                "10 min",
-                "10 min",
-                "2 to 4 servings",
+                "10",
+                "10",
+                "2",
                 Difficulty.EASY,
                 "the Best Guacamole",
                 "Directions?",

@@ -24,6 +24,7 @@ class RecipeControllerTest {
     @Mock
     RecipeService recipeService;
 
+
     @Mock
     Model model;
 
@@ -108,6 +109,17 @@ class RecipeControllerTest {
                 .andExpect(MockMvcResultMatchers.view().name("recipe/recipeform"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("recipe"));
 
+    }
+
+    @Test
+    void testDeleteRecipeById() throws Exception {
+
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/recipe/" + anyLong() + "/delete"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/"));
+
+        verify(recipeService, times(1)).deleteRecipeById(anyLong());
     }
 }
 
