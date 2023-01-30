@@ -25,7 +25,7 @@ class IngredientToIngredientCommandTest {
     @BeforeEach
     void setUp() {
         toUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
-        toIngredientCommand = new IngredientToIngredientCommand(toUnitOfMeasureCommand, toRecipeCommand);
+        toIngredientCommand = new IngredientToIngredientCommand(toUnitOfMeasureCommand);
     }
 
     @Test
