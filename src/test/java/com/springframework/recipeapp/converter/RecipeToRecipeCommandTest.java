@@ -45,7 +45,7 @@ class RecipeToRecipeCommandTest {
     @BeforeEach
     void setUp() {
         toCategoryCommand = new CategoryToCategoryCommand();
-        toIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
+        toIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand(), toRecipeCommand);
         toNotesCommand = new NotesToNotesCommand();
         toRecipeCommand = new RecipeToRecipeCommand(toNotesCommand, toIngredientCommand, toCategoryCommand);
     }

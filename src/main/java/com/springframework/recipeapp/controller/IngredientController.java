@@ -3,6 +3,7 @@ package com.springframework.recipeapp.controller;
 import com.springframework.recipeapp.command.IngredientCommand;
 import com.springframework.recipeapp.command.RecipeCommand;
 import com.springframework.recipeapp.command.UnitOfMeasureCommand;
+import com.springframework.recipeapp.model.Recipe;
 import com.springframework.recipeapp.service.IngredientService;
 import com.springframework.recipeapp.service.RecipeService;
 import com.springframework.recipeapp.service.UnitOfMeasureService;
@@ -65,29 +66,25 @@ public class IngredientController {
 
     @PostMapping("/{recipeId}/ingredient/{id}/update")
     public String updateById(@RequestParam String uomID,
-                             @RequestParam String description,
+                             @RequestParam String ingredientDescription,
                              @RequestParam String amount,
-                             @PathVariable String recipeId, @PathVariable String id, @ModelAttribute IngredientCommand ingredientCommand) {
-
-        UnitOfMeasureCommand uomCommand = unitOfMeasureService.findById(Long.valueOf(uomID));
-        ingredientCommand.setUnitOfMeasure(uomCommand);
-        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
-        ingredientCommand.setAmount(BigDecimal.valueOf(Double.parseDouble(amount)));
-        ingredientCommand.setDescription(description);
-
-        System.out.println(ingredientCommand.getId());
-        System.out.println(ingredientCommand.getDescription());
-        System.out.println(ingredientCommand.getRecipeId());
-        System.out.println(ingredientCommand.getAmount());
-        System.out.println(ingredientCommand.getUnitOfMeasure());
-        System.out.println(ingredientCommand.getRecipe());
+                             @PathVariable String recipeId, @PathVariable String id) {
 
         IngredientCommand ingredientCommandReturn = ingredientService.findByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(id));
 
+        UnitOfMeasureCommand uomCommand = unitOfMeasureService.findById(Long.valueOf(uomID));
+        ingredientCommandReturn.setUnitOfMeasure(uomCommand);
+        ingredientCommandReturn.setRecipeId(Long.valueOf(recipeId));
+        ingredientCommandReturn.setAmount(BigDecimal.valueOf(Double.parseDouble(amount)));
+        ingredientCommandReturn.setDescription(ingredientDescription);
 
+        Recipe recipe = recipeService.getRecipeById(Long.valueOf(recipeId));
+        RecipeCommand recipeCommand = recipeService.toRecipeCommand(recipe);
+        ingredientCommandReturn.setRecipe(recipeCommand);
 
         IngredientCommand saveIngredientCommand = ingredientService.saveIngredientCommand(ingredientCommandReturn);
-
+        
+        saveIngredientCommand.setRecipe(recipeCommand);
 
         return "redirect:/recipe/" + saveIngredientCommand.getRecipe().getId() + "/ingredients/show";
     }

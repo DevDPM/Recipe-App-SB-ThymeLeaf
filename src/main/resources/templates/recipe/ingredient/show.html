@@ -42,7 +42,6 @@
                             <button type="button" class="btn btn-warning opacity-50" data-bs-toggle="modal" th:data-bs-target="'#staticBackdrop-'+${recipeIngredient.getId()}">
                                 Edit
                             </button>
-
                             <!-- Modal -->
                             <div class="modal fade" th:id="'staticBackdrop-'+${recipeIngredient.getId()}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -51,12 +50,12 @@
                                             <h1 class="modal-title fs-5" th:id="'staticBackdropLabel-'+${recipeIngredient.getId()}">Add ingredient</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form th:object="${recipeIngredient}" th:action="@{/recipe/{recipeId}/ingredient/{id}/update(recipeId=${recipe.getId()}, id=${recipeIngredient.getId()})}" method="post">
+                                        <form th:action="@{/recipe/{recipeId}/ingredient/{id}/update(recipeId=${recipe.getId()}, id=${recipeIngredient.getId()})}" method="post">
                                             <div class="modal-body">
                                                 <div class="hstack">
                                                     <div class="vstack col-1">
                                                         <div>Amount</div>
-                                                        <div><input type="number" class="form-control" name="amount" th:value="*{amount}"></div>
+                                                        <div><input type="number" class="form-control" name="amount" th:value="${recipeIngredient.amount}"/></div>
                                                     </div>
                                                     <div class="vstack col-1">
                                                         <div>Unit</div>
@@ -71,7 +70,7 @@
                                                     </div>
                                                     <div class="vstack">
                                                         <div>Ingredient</div>
-                                                        <div><input type="text" class="form-control" name="description" th:value="*{description}"></div>
+                                                        <div><input type="text" class="form-control" name="ingredientDescription" th:value="${recipeIngredient.description}"/></div>
                                                     </div>
                                                 </div>
                                             </div>
