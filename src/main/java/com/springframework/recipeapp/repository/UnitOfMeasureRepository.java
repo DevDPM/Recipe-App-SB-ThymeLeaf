@@ -1,5 +1,6 @@
 package com.springframework.recipeapp.repository;
 
+import com.springframework.recipeapp.command.UnitOfMeasureCommand;
 import com.springframework.recipeapp.model.UnitOfMeasure;
 import org.springframework.data.repository.CrudRepository;
 

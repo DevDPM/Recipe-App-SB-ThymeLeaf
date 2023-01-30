@@ -40,19 +40,22 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
         recipeCommand.setDescription(source.getDescription());
         recipeCommand.setDirections(source.getDirections());
 
-        recipeCommand.setServings(null);
-        if (source.getSource() != null)
-            recipeCommand.setServings(Integer.valueOf(source.getServings()));
         recipeCommand.setDifficulty(source.getDifficulty());
         recipeCommand.setUrl(source.getUrl());
 
+        recipeCommand.setServings(null);
+        if (source.getServings() != null) {
+            recipeCommand.setServings(Integer.valueOf(source.getServings()));
+        }
+
         recipeCommand.setPrepTime(null);
-        if (source.getServings() != null)
+        if (source.getPrepTime() != null)
             recipeCommand.setPrepTime(Integer.valueOf(source.getPrepTime()));
 
         recipeCommand.setCookTime(null);
         if (source.getCookTime() != null)
             recipeCommand.setCookTime(Integer.valueOf(source.getCookTime()));
+
         recipeCommand.setSource(source.getSource());
 
         Set<IngredientCommand> ingredientCommandSet = new HashSet<>();
