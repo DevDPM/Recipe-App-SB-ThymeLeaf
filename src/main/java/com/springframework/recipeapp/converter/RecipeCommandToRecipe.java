@@ -51,7 +51,6 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
         recipe.setIngredients(ingredients);
 
         recipe.setNotes(toNotes.convert(source.getNotes()));
-        }
 
         Set<Category> categories = new HashSet<>();
         if (!source.getCategories().isEmpty()) {
