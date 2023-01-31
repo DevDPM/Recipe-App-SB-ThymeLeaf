@@ -39,8 +39,6 @@ public class IngredientController {
     @RequestMapping("{id}/ingredients/show")
     public String getIngredientByRecipeId(@PathVariable String id, Model model) {
 
-        System.out.println("show");
-
         RecipeCommand recipeCommand = recipeService.findCommandById(Long.parseLong(id));
         model.addAttribute("recipe", recipeCommand);
 

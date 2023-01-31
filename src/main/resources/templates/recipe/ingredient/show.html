@@ -93,11 +93,18 @@
             </tbody>
         </table>
         <div class="row">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-outline-primary opacity-75" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Add ingredient
-            </button>
-
+            <div class="row p-3 col-4">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-primary opacity-75" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Add ingredient
+                </button>
+            </div>
+            <div class="row p-3 col-4">
+                <a th:href="@{/recipe/{recipeId}/show(recipeId=${recipe.getId()})}" class="btn btn-outline-dark">Return to recipe</a>
+            </div>
+            <div class="row p-3 col-4">
+                <a href="/" class="btn btn-outline-dark">Return to start</a>
+            </div>
             <!--/*@thymesVar id="ingredient" type="com.springframework.recipeapp.command.IngredientCommand"*/-->
             <!-- Modal -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

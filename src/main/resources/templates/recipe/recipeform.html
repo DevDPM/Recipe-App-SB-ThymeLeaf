@@ -36,13 +36,7 @@
                 <div class="radio">
                     <label class="ui-icon-radio-on">
                         <input type="checkbox" value=""/>
-                        Cat 1
-                    </label>
-                </div>
-                <div class="radio">
-                    <label class="ui-icon-radio-on">
-                        <input type="checkbox" value=""/>
-                        Cat 1
+                        Cat 2
                     </label>
                 </div>
             </div>
@@ -96,10 +90,9 @@
             <div class="col-1 vstack align-items-center">
                 <div><label class="form-label">Difficulty</label></div>
                 <div>
-                    <select class="form-select col-3">
-                        <option>Easy</option>
-                        <option>Medium</option>
-                        <option>Hard</option>
+                    <select class="form-select col-3" th:field="*{difficulty}">
+                        <option th:each="difficulty : ${T(com.springframework.recipeapp.model.constant.Difficulty).values()}"
+                        th:value="${difficulty}" th:text="${difficulty}">Degree</option>
                     </select>
                 </div>
             </div>
@@ -133,7 +126,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <textarea class="form-control" rows="3" th:field="*{directions}"></textarea></div>
+                            <textarea style="height: 300px" class="form-control" rows="3" th:field="*{directions}"></textarea></div>
                     </div>
                 </div>
             </div>
@@ -144,7 +137,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <textarea class="form-control" rows="3" th:field="*{notes.recipeNotes}"></textarea>
+                            <textarea style="height: 300px" class="form-control" rows="3" th:field="*{notes.recipeNotes}"></textarea>
                         </div>
                     </div>
                 </div>
