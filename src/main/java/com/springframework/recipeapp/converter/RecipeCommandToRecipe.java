@@ -50,10 +50,7 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
         }
         recipe.setIngredients(ingredients);
 
-        if (toNotes.convert(source.getNotes()) != null) {
-            Notes notes = toNotes.convert(source.getNotes());
-            notes.setRecipe(recipe);
-            recipe.setNotes(notes);
+        recipe.setNotes(toNotes.convert(source.getNotes()));
         }
 
         Set<Category> categories = new HashSet<>();
