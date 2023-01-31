@@ -1,8 +1,10 @@
 package com.springframework.recipeapp.service;
 
 import com.springframework.recipeapp.command.IngredientCommand;
+import com.springframework.recipeapp.command.RecipeCommand;
 import com.springframework.recipeapp.converter.IngredientCommandToIngredient;
 import com.springframework.recipeapp.converter.IngredientToIngredientCommand;
+import com.springframework.recipeapp.converter.RecipeToRecipeCommand;
 import com.springframework.recipeapp.model.Ingredient;
 import com.springframework.recipeapp.model.Recipe;
 import com.springframework.recipeapp.repository.RecipeRepository;
@@ -12,21 +14,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Slf4j
 public class IngredientServiceImpl implements IngredientService {
 
     private final RecipeRepository recipeRepository;
+    private final RecipeToRecipeCommand toRecipeCommand;
     private final IngredientToIngredientCommand toIngredientCommand;
     private final IngredientCommandToIngredient toIngredient;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
 
     public IngredientServiceImpl(RecipeRepository recipeRepository,
+                                 RecipeToRecipeCommand toRecipeCommand,
                                  IngredientToIngredientCommand toIngredientCommand,
                                  IngredientCommandToIngredient toIngredient,
                                  UnitOfMeasureRepository unitOfMeasureRepository) {
         this.recipeRepository = recipeRepository;
+        this.toRecipeCommand = toRecipeCommand;
         this.toIngredientCommand = toIngredientCommand;
         this.toIngredient = toIngredient;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
@@ -102,5 +108,45 @@ public class IngredientServiceImpl implements IngredientService {
         }
 
         return toIngredientCommand.convert(savedIngredientOptional.get());
+    }
+
+    @Override
+    @Transactional
+    public RecipeCommand deleteById(Long recipeId, Long ingredientId) {
+
+        Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
+
+        if (!recipeOptional.isPresent())
+            throw new RuntimeException("Recipe not found");
+
+        if (!recipeOptional.get().getId().equals(recipeId))
+            throw new RuntimeException("Failed retrieving recipe");
+
+
+        Recipe saveRecipe = recipeOptional.get();
+        Optional<Ingredient> ingredientSet = saveRecipe.getIngredients()
+                .stream()
+                .filter(ingredient -> ingredient.getId().equals(ingredientId))
+                .findFirst();
+
+        if (!ingredientSet.isPresent())
+            throw new RuntimeException("Failed to retrieve ingredient from recipe list");
+
+        Ingredient ingredientToDelete = ingredientSet.get();
+        ingredientToDelete.setRecipe(null);
+
+        saveRecipe.getIngredients().remove(ingredientSet.get());
+
+        Recipe savedRecipe = recipeRepository.save(saveRecipe);
+
+        Optional<Ingredient> validateIngredient = savedRecipe.getIngredients()
+                .stream()
+                .filter(ingredient -> ingredient.getId().equals(ingredientId))
+                .findFirst();
+
+        if (validateIngredient.isPresent())
+            throw new RuntimeException("failed removing ingredient");
+
+        return toRecipeCommand.convert(savedRecipe);
     }
 }

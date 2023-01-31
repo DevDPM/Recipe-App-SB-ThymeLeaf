@@ -1,8 +1,10 @@
 package com.springframework.recipeapp.service;
 
+import com.springframework.recipeapp.command.IngredientCommand;
 import com.springframework.recipeapp.command.RecipeCommand;
 import com.springframework.recipeapp.converter.RecipeCommandToRecipe;
 import com.springframework.recipeapp.converter.RecipeToRecipeCommand;
+import com.springframework.recipeapp.model.Ingredient;
 import com.springframework.recipeapp.model.Recipe;
 import com.springframework.recipeapp.repository.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -55,7 +58,9 @@ public class RecipeServiceImpl implements RecipeService{
             return null;
 
         Recipe recipeReturn = toRecipe.convert(recipeCommand);
+
         Recipe recipeSaved = recipeRepository.save(recipeReturn);
+
         RecipeCommand recipeCommandReturn = toRecipeCommand.convert(recipeSaved);
 
         return recipeCommandReturn;
@@ -76,4 +81,5 @@ public class RecipeServiceImpl implements RecipeService{
     public void deleteRecipeById(Long id) {
         recipeRepository.deleteById(id);
     }
+
 }

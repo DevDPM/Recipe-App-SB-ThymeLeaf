@@ -1,5 +1,6 @@
 package com.springframework.recipeapp.service;
 
+import com.springframework.recipeapp.command.IngredientCommand;
 import com.springframework.recipeapp.command.RecipeCommand;
 import com.springframework.recipeapp.model.Recipe;
 
@@ -18,4 +19,5 @@ public interface RecipeService {
     RecipeCommand toRecipeCommand(Recipe recipe);
 
     void deleteRecipeById(Long id);
+
 }

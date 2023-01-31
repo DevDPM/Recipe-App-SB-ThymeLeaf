@@ -18,4 +18,15 @@ public class IngredientCommand {
     private RecipeCommand recipe;
     private UnitOfMeasureCommand unitOfMeasure;
 
+    @Override
+    public String toString() {
+        return "IngredientCommand{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ", recipeId=" + recipeId +
+                ", recipe=" + recipe +
+                ", unitOfMeasure=" + unitOfMeasure +
+                '}';
+    }
 }
