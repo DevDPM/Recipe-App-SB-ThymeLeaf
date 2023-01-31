@@ -17,60 +17,96 @@
 <div class="container bg-light p-3 rounded-top">
     <form  th:object="${recipe}" th:action="@{/recipe}"  method="post">
         <input type="hidden" th:field="*{id}"/>
-        <div class="row pb-3 text-bg-dark rounded-top pt-4">
+        <div class="row pb-3 text-bg-dark rounded-top pt-4 mb-3">
             <h1 class="title">Edit recipe</h1>
         </div>
-        <div class="row pt-5 m-1">
-            <div class="col-3"><label class="form-label">Recipe description</label></div>
-            <div class="col-6"><input type="text" class="form-control" th:field="*{description}"/></div>
-        </div>
-        <div class="row pt-3 m-1">
-            <div class="col-3"><label class="form-label">Categories:</label></div>
-            <div class="col-6">
-                <div class="radio">
-                    <label class="ui-icon-radio-on">
-                        <input type="checkbox" value=""/>
-                        Cat 1
-                    </label>
+
+
+
+        <div class="row row-cols-1 row-cols-2 g-4">
+            <div class="col">
+                <div class="row m-2">
+                    <div class="hstack">
+                        <div class="col-6">
+                            <label class="form-label">Recipe title:</label>
+                        </div>
+                        <div class="col-6">
+                            <div class="radio"><input type="text" class="form-control" th:field="*{description}"/></div>
+                        </div>
+                    </div>
+                    <div class="hstack mb-2">
+                        <div class="col-6">
+                            <label class="form-label">Categories:</label>
+                        </div>
+                        <div class="col-6">
+                            <div class="radio">
+                                <label class="ui-icon-radio-on">
+                                    <input type="checkbox" value=""/>
+                                    Cat 1
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="ui-icon-radio-on">
+                                    <input type="checkbox" value=""/>
+                                    Cat 2
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hstack mb-2">
+                        <div class="col-6">
+                            <label class="form-label">Servings:</label>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control col-4" th:field="*{servings}"/>
+                                <div class="input-group-text">amount</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hstack mb-2">
+                        <div class="col-6">
+                            <label class="form-label">Source:</label>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <div class="input-group-text">http://</div>
+                                <input type="text" class="form-control" th:field="*{source}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hstack mb-2">
+                        <div class="col-6">
+                            <label class="form-label">URL:</label>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <div class="input-group-text">http://</div>
+                                <input type="text" class="form-control" th:field="*{url}"/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="radio">
-                    <label class="ui-icon-radio-on">
-                        <input type="checkbox" value=""/>
-                        Cat 2
-                    </label>
+            </div>
+            <div class="col">
+                <div class="row h-100 ">
+                    <div class="col-12">
+                        <div class="col" style="text-align: center;">
+                            <img style="alignment: center" src="../../static/images/guacamole400x400WithX.jpg"
+                                 th:src="@{/recipe/{id}/recipeimage(id=${recipe.getId()})}"
+                                 width="300" height="300">
+                        </div>
+                        <div class="row p-3">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger opacity-50" disabled>
+                                Edit image [blocked]
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="row m-1">
-            <div class="row gy-2">
-                <div class="col-3"><label class="form-label">Servings</label></div>
-                <div class="col-6">
-                    <div class="input-group">
-                        <input type="text" class="form-control col-4" th:field="*{servings}"/>
-                        <div class="input-group-text">amount</div>
-                    </div>
-                </div>
-                <div class="row gy-1">
-                    <div class="col-3"><label class="form-label">Source</label></div>
-                    <div class="col-6">
-                        <div class="input-group">
-                            <div class="input-group-text">http://</div>
-                            <input type="text" class="form-control" th:field="*{source}"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="row gy-1 pb-3">
-                    <div class="col-3"><label class="form-label">URL</label></div>
-                    <div class="col-6">
-                        <div class="input-group">
-                            <div class="input-group-text">http://</div>
-                            <input type="text" class="form-control" th:field="*{url}"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="row pt-2 pb-3 border-top-0 border-1 text-black bg-opacity-10 bg-warning m-2 rounded-top">
             <div class="col-1 vstack align-items-center">
@@ -117,6 +153,9 @@
                     </ul>
                 </div>
             </div>
+            <button type="button" class="btn btn-danger opacity-50" disabled>
+                Edit imgredients [blocked]
+            </button>
         </div>
         <div class="row m-1 pt-4">
             <div class="panel panel-primary">
@@ -144,7 +183,7 @@
             </div>
             <div class="row col-5 gap-2 p-3">
                 <button type="submit" class="btn btn-primary opacity-50">Save</button>
-                <a href="/" class="btn btn-danger opacity-50">Cancel</a>
+                <a href="/" class="btn btn-outline-secondary opacity-50">Cancel</a>
             </div>
 
         </div>

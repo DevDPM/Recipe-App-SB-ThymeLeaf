@@ -6,8 +6,8 @@
     <title>Recipe form</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"
-          th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}">
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+          crossorigin="anonymous" th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}">
 
     <script src="/webjars/jquery/3.6.3/jquery.min.js"></script>
 </head>
@@ -15,105 +15,179 @@
 <!--/*@thymesVar id="recipe" type="com.springframework.recipeapp.model.Recipe"*/-->
 
 <div class="container bg-light p-3 rounded-top">
-    <form  th:object="${recipe}">
-        <input type="hidden" th:field="*{id}"/>
-        <div class="row pb-3 text-bg-dark rounded-top pt-4">
-            <h1 class="title">Edit recipe</h1>
-        </div>
-        <div class="row pt-5 m-1">
-            <div class="col" colspan="3"><h1 class="panel-title" th:text="${recipe.getDescription()}">Title description here</h1></div>
-        </div>
-        <div class="row pt-3 m-1">
-            <div class="col-2"><label class="form-label">Categories:</label></div>
-            <div class="col-6">
-                <div class="radio">
-                    <ul th:each="category : ${recipe.getCategories()}">
-                        <li th:text="${category.getDescription()}">cat1</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div class="row pb-3 mb-3 text-bg-dark rounded-top pt-4">
+        <h1 class="title">Show recipe</h1>
+    </div>
 
-        <div class="row m-1">
-            <div class="row">
-                <div class="col-2"><label class="form-label">Servings:</label></div>
-                <div class="col-6">
-                    <div class="input-group">
-                        <p th:text="${recipe.getServings()} + ' min'">4</p>
+    <!--first descriptions row-->
+    <div class="row row-cols-1 row-cols-2 g-4">
+        <div class="col">
+            <div class="row m-2">
+                <div class="col pb-4">
+                    <div class="hstack">
+                        <div class="col-12">
+                            <h1 class="panel-title" th:text="${recipe.getDescription()}">Title description here</h1>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-2"><label class="form-label">Source:</label></div>
-                    <div class="col-6"><p th:text="${recipe.getSource()}">something something</p></div>
+                <div class="hstack card h-100 border mb-2">
+                    <div class="col-6">
+                        <label class="form-label">Categories:</label>
+                    </div>
+                    <div class="col-6">
+                        <div class="radio">
+                            <ul th:each="category : ${recipe.getCategories()}">
+                                <li th:text="${category.getDescription()}">cat1</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="row pb-3">
-                    <div class="col-2"><label class="form-label">URL:</label></div>
-                    <div class="col-6"><p th:text="${recipe.getUrl()}">https://www.example.com/</p></div>
+                <div class="hstack card h-100 border mb-2">
+                    <div class="col-6">
+                        <label class="form-label">Servings:</label>
+                    </div>
+                    <div class="col-6">
+                        <p th:text="${recipe.getServings()} + ' portions'">4 portions</p>
+                    </div>
+                </div>
+                <div class="hstack card h-100 border mb-2">
+                    <div class="col-6">
+                        <label class="form-label">Source:</label>
+                    </div>
+                    <div class="col-6">
+                        <p th:text="${recipe.getSource()}">something something</p>
+                    </div>
+                </div>
+                <div class="hstack card h-100 border mb-2">
+                    <div class="col-6">
+                        <label class="form-label">URL:</label>
+                    </div>
+                    <div class="col-6">
+                        <p th:text="${recipe.getUrl()}">https://www.example.com/</p>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="col">
+            <div class="row h-100 ">
+                <div class="col-12">
+                    <div class="col" style="text-align: center;">
+                        <img style="alignment: center" src="../../static/images/guacamole400x400WithX.jpg"
+                             th:src="@{/recipe/{id}/recipeimage(id=${recipe.getId()})}"
+                             width="300" height="300">
+                    </div>
 
-        <div class="row pt-2 pb-3 border-top-0 border-1 text-black bg-opacity-10 bg-warning m-2 rounded-top">
-            <div class="col-1 vstack">
-                <div><label class="form-label">Preparation time</label></div>
-                <div class="input-group"><p th:text="${recipe.getPrepTime()} + ' min'">amount of minutes</p></div>
-            </div>
-            <div class="col-1 vstack ">
-                <div><label class="form-label">Cooking time</label></div>
-                <div class="input-group"><p th:text="${recipe.getCookTime()} + ' min'">amount of minutes</p></div>
-            </div>
-            <div class="col-1 vstack ">
-                <div><label class="form-label">Difficulty</label></div>
-                <div class="input-group"><p th:text="${recipe.getDifficulty()}">difficulty</p></div>
-            </div>
-        </div>
+                    <!--Modal popup to save image-->
+                    <div class="row p-3">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-primary opacity-75" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Edit image
+                        </button>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="http:\\localhost" method="post" enctype="multipart/form-data"
+                                      th:action="@{'/recipe/' + ${recipe.getId()} + '/image'}">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Upload image</h1>
+                                    </div>
+                                    <div class="col" style="text-align: center;">
 
-        <div class="row bg-secondary bg-opacity-10 m-1 rounded">
-            <div class="row">
-                <div class="col">
-                    <h2 class="panel-title text-black p-2">Ingredients</h2>
+                                        <div class="row p-1"><center><input style="text-align: center;" id="imagefile" name="imagefile" type="file" class="file"></center></div>
+                                    </div>
+                                    <div class="modal-body">
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <ul>
-                        <li th:remove="all">1 Cup of milk</li>
-                        <li th:remove="all">1 Teaspoon of chocolate</li>
-                        <li th:each="ingredient : ${recipe.ingredients}"
-                            th:text="${(ingredient.getAmount() +
+        </div>
+    </div>
+    <!--Time and difficulty row-->
+    <div class="row mt-4 pt-2 pb-3 border-top-0 border-1 text-black bg-opacity-10 bg-warning m-2 rounded-top">
+        <div class="col-1 vstack">
+            <div><label class="form-label">Preparation time</label></div>
+            <div class="input-group"><p th:text="${recipe.getPrepTime()} + ' min'">amount of minutes</p></div>
+        </div>
+        <div class="col-1 vstack ">
+            <div><label class="form-label">Cooking time</label></div>
+            <div class="input-group"><p th:text="${recipe.getCookTime()} + ' min'">amount of minutes</p></div>
+        </div>
+        <div class="col-1 vstack ">
+            <div><label class="form-label">Difficulty</label></div>
+            <div class="input-group"><p th:text="${recipe.getDifficulty()}">difficulty</p></div>
+        </div>
+    </div>
+    <!--Ingredients row-->
+    <div class="row bg-secondary bg-opacity-10 mt-4 m-2 rounded">
+        <div class="row">
+            <div class="col">
+                <h2 class="panel-title text-black p-2">Ingredients</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul>
+                    <li th:remove="all">1 Cup of milk</li>
+                    <li th:remove="all">1 Teaspoon of chocolate</li>
+                    <li th:each="ingredient : ${recipe.ingredients}"
+                        th:text="${(ingredient.getAmount() +
                                         ' ' + ingredient.unitOfMeasure.getUnit() +
                                         ' - ' + ingredient.getDescription())}">1 Teaspoon of Sugar
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row col-3">
-                <a th:href="@{/recipe/{recipeId}/ingredients/show(recipeId=${recipe.getId()})}" class="btn btn-primary opacity-50">Edit</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div class="row m-1 pt-4">
-            <div class="header">
-                <h2 class="title">Directions</h2>
-            </div>
-            <div class="row">
-                <div class="row">
-                    <div class="col-md-12 form-group">
-                        <textarea style="height: 300px" class="form-control" disabled rows="3" th:text="*{directions}"></textarea></div>
-                </div>
+        <a th:href="@{/recipe/{recipeId}/ingredients/show(recipeId=${recipe.getId()})}" class="btn btn-primary opacity-50">Edit</a>
+    </div>
+    <!--Directions row-->
+    <div class="row bg-white bg-opacity-25 mt-4 m-2 rounded">
+        <div class="row">
+            <div class="col">
+                <h2 class="panel-title text-black p-2">Notes</h2>
             </div>
         </div>
-        <div class="row m-1 pt-4">
-            <div class="header">
-                <h2 class="title">Notes</h2>
-            </div>
-            <div class="row">
-                <div class="row">
-                    <div class="col-md-12 form-group">
-                        <textarea style="height: 300px" class="form-control" disabled rows="3" th:text="${recipe.getNotes().getRecipeNotes()}"></textarea></div>
-                </div>
+        <div class="row">
+            <div class="col-md-12">
+                <textarea style="height: 300px" class="form-control" disabled rows="3" th:text="*{recipe.getDirections()}"></textarea>
             </div>
         </div>
-    </form>
+    </div>
+    <!--Notes row-->
+    <div class="row bg-white bg-opacity-25 mt-4 m-2 rounded">
+        <div class="row">
+            <div class="col">
+                <h2 class="panel-title text-black p-2">Directions</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <textarea style="height: 300px" class="form-control" disabled rows="3" th:text="${recipe.getNotes().getRecipeNotes()}"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="row p-3 col-4">
+            <a th:href="@{/recipe/{recipeId}/update(recipeId=${recipe.getId()})}" class="btn btn-outline-dark">Return to recipe update form</a>
+        </div>
+        <div class="row p-3 col-4">
+            <a href="/" class="btn btn-outline-dark">Return to start</a>
+        </div>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous" th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+
 </body>
 </html>

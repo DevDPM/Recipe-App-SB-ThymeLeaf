@@ -2,11 +2,8 @@ package com.springframework.recipeapp.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class ImageService {
+public interface ImageService {
 
+    void saveImageFile(Long id, MultipartFile file);
 
-
-    public void saveImageFile(Long id, MultipartFile file){
-
-    }
 }

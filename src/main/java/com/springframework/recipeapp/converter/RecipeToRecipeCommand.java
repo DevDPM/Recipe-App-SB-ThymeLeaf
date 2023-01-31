@@ -42,6 +42,7 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
 
         recipeCommand.setDifficulty(source.getDifficulty());
         recipeCommand.setUrl(source.getUrl());
+        recipeCommand.setImage(source.getImage());
 
         recipeCommand.setServings(null);
         if (source.getServings() != null) {
@@ -76,7 +77,6 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
             recipeCommand.setNotes(notesCommand);
         }
 
-        Set<CategoryCommand> categoryCommands = new HashSet<>();
         if (!source.getCategories().isEmpty()) {
             source.getCategories()
                     .stream()

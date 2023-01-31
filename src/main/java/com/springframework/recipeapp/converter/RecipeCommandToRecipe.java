@@ -70,6 +70,7 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
         }
         recipe.setCategories(categories);
 
+        recipe.setImage(source.getImage());
         recipe.setDifficulty(source.getDifficulty());
         recipe.setDescription(source.getDescription());
         recipe.setDirections(source.getDirections());
