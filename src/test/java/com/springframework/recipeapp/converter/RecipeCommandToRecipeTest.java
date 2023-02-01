@@ -113,11 +113,11 @@ class RecipeCommandToRecipeTest {
         assertNull(notesCommand.getRecipe());
 
         assertEquals(recipeCommand.getId(),recipeReturn.getId());
-        assertEquals(recipeCommand.getCookTime().toString(),recipeReturn.getCookTime());
-        assertEquals(recipeCommand.getServings().toString(),recipeReturn.getServings());
+        assertEquals(recipeCommand.getCookTime(),recipeReturn.getCookTime());
+        assertEquals(recipeCommand.getServings(),recipeReturn.getServings());
         assertEquals(recipeCommand.getDirections(),recipeReturn.getDirections());
         assertEquals(recipeCommand.getDifficulty(),recipeReturn.getDifficulty());
-        assertEquals(recipeCommand.getPrepTime().toString(),recipeReturn.getPrepTime());
+        assertEquals(recipeCommand.getPrepTime(),recipeReturn.getPrepTime());
         assertEquals(recipeCommand.getSource(),recipeReturn.getSource());
         assertEquals(recipeCommand.getDescription(),recipeReturn.getDescription());
         assertEquals(recipeCommand.getUrl(),recipeReturn.getUrl());

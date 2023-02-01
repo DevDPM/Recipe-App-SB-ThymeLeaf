@@ -1,5 +1,6 @@
 package com.springframework.recipeapp.converter;
 
+import com.springframework.recipeapp.command.NotesCommand;
 import com.springframework.recipeapp.command.RecipeCommand;
 import com.springframework.recipeapp.model.Category;
 import com.springframework.recipeapp.model.Ingredient;
@@ -37,48 +38,40 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
 
         final Recipe recipe = new Recipe();
         recipe.setId(source.getId());
-
-        Set<Ingredient> ingredients = new HashSet<>();
-        if (!source.getIngredients().isEmpty()) {
-            source.getIngredients()
-                    .stream()
-                    .forEach(ingredientCommand -> {
-                        Ingredient ingredient = toIngredient.convert(ingredientCommand);
-                        ingredient.setRecipe(recipe);
-                        ingredients.add(ingredient);
-            });
-        }
-        recipe.setIngredients(ingredients);
-
-        if (toNotes.convert(source.getNotes()) != null) {
-            Notes notes = toNotes.convert(source.getNotes());
-            notes.setRecipe(recipe);
-            recipe.setNotes(notes);
-        }
-
-        Set<Category> categories = new HashSet<>();
-        if (!source.getCategories().isEmpty()) {
-            source.getCategories()
-                    .stream()
-                    .forEach(category -> {
-                        Category categoryReturn = toCategory.convert(category);
-                        Set<Recipe> setRecipe = new HashSet<>();
-                        setRecipe.add(recipe);
-                        categoryReturn.setRecipes(setRecipe);
-                        categories.add(categoryReturn);
-                    });
-        }
-        recipe.setCategories(categories);
-
         recipe.setImage(source.getImage());
         recipe.setDifficulty(source.getDifficulty());
         recipe.setDescription(source.getDescription());
         recipe.setDirections(source.getDirections());
         recipe.setSource(source.getSource());
         recipe.setUrl(source.getUrl());
-        recipe.setServings(String.valueOf(source.getServings()));
-        recipe.setPrepTime(String.valueOf(source.getPrepTime()));
-        recipe.setCookTime(String.valueOf(source.getCookTime()));
+        recipe.setServings(source.getServings());
+        recipe.setPrepTime(source.getPrepTime());
+        recipe.setCookTime(source.getCookTime());
+        System.out.println("ToRecipe Notes.getID: "+source.getNotes().getId());
+        System.out.println("ToRecipe Notes.getID: "+source.getNotes().getRecipeNotes());
+        System.out.println("ToRecipe Notes.getID: "+source.getNotes().getRecipe());
+        recipe.setNotes(toNotes.convert(source.getNotes()));
+        recipe.getNotes().setRecipe(recipe);
+
+        if (!source.getIngredients().isEmpty()) {
+            source.getIngredients()
+                    .stream()
+                    .forEach(ingredientCommand -> {
+                        Ingredient ingredient = toIngredient.convert(ingredientCommand);
+                        ingredient.setRecipe(recipe);
+                        recipe.getIngredients().add(ingredient);
+            });
+        }
+
+        if (!source.getCategories().isEmpty()) {
+            source.getCategories()
+                    .stream()
+                    .forEach(category -> {
+                        Category categoryReturn = toCategory.convert(category);
+                        categoryReturn.getRecipes().add(recipe);
+                        recipe.getCategories().add(categoryReturn);
+                    });
+        }
 
         return recipe;
     }

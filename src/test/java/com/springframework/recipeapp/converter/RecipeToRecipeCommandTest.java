@@ -37,7 +37,7 @@ class RecipeToRecipeCommandTest {
     public static final String UNIT = "unit";
     public static final BigDecimal AMOUNT = new BigDecimal(10);
     public static final String RECIPE_NOTES = "recipe_notes";
-    public static final String STRING_INTEGER_VALUE = "20";
+    public static final Integer TIME_INTEGER_VALUE = 20;
     public static final String URL = "url";
     public static final String SOURCE = "source";
     private static final String DIRECTIONS = "directions";
@@ -66,13 +66,14 @@ class RecipeToRecipeCommandTest {
 
         notes.setId(LONG_ID_NOTES);
         notes.setRecipeNotes(RECIPE_NOTES);
+        notes.setRecipe(recipe);
 
         recipe.setId(LONG_ID_RECIPE);
         recipe.setDirections(DIRECTIONS);
-        recipe.setCookTime(STRING_INTEGER_VALUE);
-        recipe.setPrepTime(STRING_INTEGER_VALUE);
+        recipe.setCookTime(TIME_INTEGER_VALUE);
+        recipe.setPrepTime(TIME_INTEGER_VALUE);
         recipe.setDifficulty(Difficulty.HARD);
-        recipe.setServings(STRING_INTEGER_VALUE);
+        recipe.setServings(TIME_INTEGER_VALUE);
         recipe.setSource(SOURCE);
         recipe.setUrl(URL);
         recipe.setDescription(DESCRIPTION);
@@ -115,11 +116,11 @@ class RecipeToRecipeCommandTest {
 //        assertNull(notes.getRecipe());                 // Can't do this due to stackoverflow
 
         assertEquals(recipe.getId(),recipeCommandReturn.getId());
-        assertEquals(Integer.valueOf(STRING_INTEGER_VALUE),recipeCommandReturn.getCookTime());
-        assertEquals(Integer.valueOf(STRING_INTEGER_VALUE),recipeCommandReturn.getServings());
+        assertEquals(Integer.valueOf(TIME_INTEGER_VALUE),recipeCommandReturn.getCookTime());
+        assertEquals(Integer.valueOf(TIME_INTEGER_VALUE),recipeCommandReturn.getServings());
         assertEquals(recipe.getDirections(),recipeCommandReturn.getDirections());
         assertEquals(recipe.getDifficulty(),recipeCommandReturn.getDifficulty());
-        assertEquals(Integer.valueOf(STRING_INTEGER_VALUE),recipeCommandReturn.getPrepTime());
+        assertEquals(Integer.valueOf(TIME_INTEGER_VALUE),recipeCommandReturn.getPrepTime());
         assertEquals(recipe.getSource(),recipeCommandReturn.getSource());
         assertEquals(recipe.getDescription(),recipeCommandReturn.getDescription());
         assertEquals(recipe.getUrl(),recipeCommandReturn.getUrl());

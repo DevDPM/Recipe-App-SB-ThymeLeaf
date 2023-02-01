@@ -17,7 +17,7 @@ public class NotesToNotesCommand implements Converter<Notes, NotesCommand> {
         if (source == null)
             return null;
 
-        NotesCommand command = new NotesCommand();
+        final NotesCommand command = new NotesCommand();
         command.setId(source.getId());
         command.setRecipeNotes(source.getRecipeNotes());
 

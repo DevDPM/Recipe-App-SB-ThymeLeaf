@@ -39,42 +39,24 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
         recipeCommand.setId(source.getId());
         recipeCommand.setDescription(source.getDescription());
         recipeCommand.setDirections(source.getDirections());
-
         recipeCommand.setDifficulty(source.getDifficulty());
         recipeCommand.setUrl(source.getUrl());
         recipeCommand.setImage(source.getImage());
-
-        recipeCommand.setServings(null);
-        if (source.getServings() != null) {
-            recipeCommand.setServings(Integer.valueOf(source.getServings()));
-        }
-
-        recipeCommand.setPrepTime(null);
-        if (source.getPrepTime() != null)
-            recipeCommand.setPrepTime(Integer.valueOf(source.getPrepTime()));
-
-        recipeCommand.setCookTime(null);
-        if (source.getCookTime() != null)
-            recipeCommand.setCookTime(Integer.valueOf(source.getCookTime()));
-
+        recipeCommand.setNotes(toNotesCommand.convert(source.getNotes()));
+        recipeCommand.getNotes().setRecipe(recipeCommand);
+        recipeCommand.setServings(source.getServings());
         recipeCommand.setSource(source.getSource());
+        recipeCommand.setCookTime(source.getCookTime());
+        recipeCommand.setPrepTime(source.getPrepTime());
 
-        Set<IngredientCommand> ingredientCommandSet = new HashSet<>();
         if (!source.getIngredients().isEmpty()) {
             source.getIngredients()
                     .stream()
                     .forEach(ingredient -> {
                         IngredientCommand ingredientCommand = toIngredientCommand.convert(ingredient);
                         ingredientCommand.setRecipe(recipeCommand);
-                        ingredientCommandSet.add(ingredientCommand);
+                        recipeCommand.getIngredients().add(ingredientCommand);
                     });
-        }
-        recipeCommand.setIngredients(ingredientCommandSet);
-
-        if (source.getNotes() != null) {
-            NotesCommand notesCommand = toNotesCommand.convert(source.getNotes());
-            notesCommand.setRecipe(recipeCommand);
-            recipeCommand.setNotes(notesCommand);
         }
 
         if (!source.getCategories().isEmpty()) {

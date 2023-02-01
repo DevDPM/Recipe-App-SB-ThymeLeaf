@@ -17,6 +17,7 @@
 <div class="container bg-light p-3 rounded-top">
     <form  th:object="${recipe}" th:action="@{/recipe}"  method="post">
         <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{notes.id}"/>
         <div class="row pb-3 text-bg-dark rounded-top pt-4 mb-3">
             <h1 class="title">Edit recipe</h1>
         </div>

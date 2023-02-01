@@ -39,9 +39,9 @@ public class DataLoader implements CommandLineRunner {
         categoryList.add(categoryRepository.findByDescription("Mexican").get());
         categoryList.add(categoryRepository.findByDescription("Fast Food").get());
         CreateRecipe(recipe,
-                "15",
-                "20",
-                "4",
+                15,
+                20,
+                4,
                 Difficulty.MEDIUM,
                 "Spicy Grilled Chicken Tacos",
                 "Directions?",
@@ -99,9 +99,9 @@ public class DataLoader implements CommandLineRunner {
         categoryList2.add(categoryRepository.findByDescription("Italian").get());
         categoryList2.add(categoryRepository.findByDescription("Healthy Food").get());
         CreateRecipe(recipe2,
-                "10",
-                "10",
-                "2",
+                10,
+                10,
+                2,
                 Difficulty.EASY,
                 "the Best Guacamole",
                 "Directions?",
@@ -154,7 +154,7 @@ public class DataLoader implements CommandLineRunner {
         log.debug("Bootstrap items added & saved");
 
     }
-    private void CreateRecipe(Recipe recipe, String cookTime, String prepTime, String servings, Difficulty difficulty,
+    private void CreateRecipe(Recipe recipe, Integer cookTime, Integer prepTime, Integer servings, Difficulty difficulty,
                               String description, String directions, Set<Category> categories) {
         recipe.setCookTime(cookTime);
         recipe.setPrepTime(prepTime);

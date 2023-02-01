@@ -54,9 +54,6 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     @Transactional
     public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
-        if (recipeCommand == null)
-            return null;
-
         Recipe recipeReturn = toRecipe.convert(recipeCommand);
 
         Recipe recipeSaved = recipeRepository.save(recipeReturn);
