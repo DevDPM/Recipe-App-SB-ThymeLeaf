@@ -40,7 +40,7 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public Recipe findById(Long id) {
 //        return Optional.ofNullable(recipeRepository.findById(id)).get().get(); // can be more sophisticated
-        return recipeRepository.findById(id).orElseThrow(() -> new NotFoundException("Recipe not found!"));
+        return recipeRepository.findById(id).orElseThrow(() -> new NotFoundException("Recipe not found. For Id value: " + id.toString()));
     }
 
     @Override
