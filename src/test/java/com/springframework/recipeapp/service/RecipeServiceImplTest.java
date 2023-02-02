@@ -59,7 +59,7 @@ class RecipeServiceImplTest {
 
         when(recipeRepository.findById(id)).thenReturn(recipeOptional);
 
-        Recipe receivedRecipe = recipeService.getRecipeById(id);
+        Recipe receivedRecipe = recipeService.findById(id);
 
         assertNotNull(receivedRecipe, "Null recipes returned");
         assertEquals(id, receivedRecipe.getId());

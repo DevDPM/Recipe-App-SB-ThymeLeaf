@@ -47,10 +47,11 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
         recipe.setServings(source.getServings());
         recipe.setPrepTime(source.getPrepTime());
         recipe.setCookTime(source.getCookTime());
-        System.out.println("ToRecipe Notes.getID: "+source.getNotes().getId());
-        System.out.println("ToRecipe Notes.getID: "+source.getNotes().getRecipeNotes());
-        System.out.println("ToRecipe Notes.getID: "+source.getNotes().getRecipe());
-        recipe.setNotes(toNotes.convert(source.getNotes()));
+        if (source.getSource() == null) {
+            recipe.setNotes(new Notes());
+        } else {
+            recipe.setNotes(toNotes.convert(source.getNotes()));
+        }
         recipe.getNotes().setRecipe(recipe);
 
         if (!source.getIngredients().isEmpty()) {

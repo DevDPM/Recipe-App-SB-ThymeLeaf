@@ -1,7 +1,9 @@
 package com.springframework.recipeapp.controller;
 
 import com.springframework.recipeapp.command.RecipeCommand;
+import com.springframework.recipeapp.exception.NotFoundException;
 import com.springframework.recipeapp.model.Recipe;
+import com.springframework.recipeapp.repository.RecipeRepository;
 import com.springframework.recipeapp.service.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -23,6 +27,9 @@ class RecipeControllerTest {
 
     @Mock
     RecipeService recipeService;
+
+    @Mock
+    RecipeRepository recipeRepository;
 
 
     @Mock
@@ -39,15 +46,37 @@ class RecipeControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
     }
 
+
+    @Test
+    public void getRecipeByIdTstNotFound() throws Exception {
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipeReturn = recipeService.findById(1L);
+    }
+
+    @Test
+    public void testGetRecipeNotfound() throws Exception {
+
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/recipe/1/show"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
     @Test
     void getRecipeById() throws Exception {
-        String ID = "5";
+        Long ID = 5L;
 
         //given
         Recipe recipe = new Recipe();
-        recipe.setId(Long.parseLong(ID));
+        recipe.setId(ID);
 
-        when(recipeService.getRecipeById(Long.parseLong(ID)))
+        when(recipeService.findById(ID))
                 .thenReturn(recipe);
 
 
@@ -59,7 +88,7 @@ class RecipeControllerTest {
                 .addAttribute(ArgumentMatchers.eq("recipe"), argumentCaptor.capture());
 
         verify(recipeService, times(1))
-                .getRecipeById(anyLong());
+                .findById(anyLong());
 
 
         // MockMVC tests
@@ -81,9 +110,9 @@ class RecipeControllerTest {
 
     @Test
     void testPostNewRecipeForm() throws Exception {
-        String ID = "1";
+        Long ID = 1L;
         RecipeCommand command = new RecipeCommand();
-        command.setId(Long.parseLong(ID));
+        command.setId(ID);
 
         when(recipeService.saveRecipeCommand(any())).thenReturn(command);
 
@@ -98,11 +127,11 @@ class RecipeControllerTest {
 
     @Test
     void testGetUpdateView() throws Exception {
-        String ID = "1";
+        Long ID = 1L;
         RecipeCommand command = new RecipeCommand();
-        command.setId(Long.parseLong(ID));
+        command.setId(ID);
 
-        when(recipeService.findCommandById(Long.parseLong(ID))).thenReturn(command);
+        when(recipeService.findCommandById(ID)).thenReturn(command);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/recipe/" + ID + "/update"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

@@ -98,7 +98,7 @@ public class IngredientController {
         ingredientCommandReturn.setAmount(BigDecimal.valueOf(Double.parseDouble(amount)));
         ingredientCommandReturn.setDescription(ingredientDescription);
 
-        Recipe recipe = recipeService.getRecipeById(Long.valueOf(recipeId));
+        Recipe recipe = recipeService.findById(Long.valueOf(recipeId));
         RecipeCommand recipeCommand = recipeService.toRecipeCommand(recipe);
         ingredientCommandReturn.setRecipe(recipeCommand);
 

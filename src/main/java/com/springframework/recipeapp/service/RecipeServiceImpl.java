@@ -1,10 +1,9 @@
 package com.springframework.recipeapp.service;
 
-import com.springframework.recipeapp.command.IngredientCommand;
 import com.springframework.recipeapp.command.RecipeCommand;
 import com.springframework.recipeapp.converter.RecipeCommandToRecipe;
 import com.springframework.recipeapp.converter.RecipeToRecipeCommand;
-import com.springframework.recipeapp.model.Ingredient;
+import com.springframework.recipeapp.exception.NotFoundException;
 import com.springframework.recipeapp.model.Recipe;
 import com.springframework.recipeapp.repository.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -40,15 +38,15 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public Recipe getRecipeById(Long id) {
+    public Recipe findById(Long id) {
 //        return Optional.ofNullable(recipeRepository.findById(id)).get().get(); // can be more sophisticated
-        return recipeRepository.findById(id).orElseThrow(() -> new RuntimeException("Recipe not found!"));
+        return recipeRepository.findById(id).orElseThrow(() -> new NotFoundException("Recipe not found!"));
     }
 
     @Override
     @Transactional
     public RecipeCommand findCommandById(Long id) {
-        return toRecipeCommand.convert(getRecipeById(id));
+        return toRecipeCommand.convert(findById(id));
     }
 
     @Override
