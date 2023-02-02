@@ -22,6 +22,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 class RecipeControllerTest {
 
@@ -130,7 +131,9 @@ class RecipeControllerTest {
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("id", "")
                         .param("description", "some string")
-                )
+                        .param("prepTime", "999")
+                        .param("directions","step 1. done.")
+                        .param("url","http://www.hallo.nl"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/recipe/" + ID + "/show"));
     }
@@ -159,6 +162,20 @@ class RecipeControllerTest {
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/"));
 
         verify(recipeService, times(1)).deleteRecipeById(anyLong());
+    }
+
+
+
+    @Test
+    public void testGetGlobalRecipeNumberFormatException() throws Exception {
+
+        mockMvc.perform(get("/recipe/sdfsd/show"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.view().name("error/400error"));
+
+        mockMvc.perform(get("/recipe/sdfsd/update"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.view().name("error/400error"));
     }
 }
 

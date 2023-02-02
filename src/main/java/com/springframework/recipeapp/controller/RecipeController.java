@@ -5,10 +5,12 @@ import com.springframework.recipeapp.exception.BadRequestException;
 import com.springframework.recipeapp.exception.NotFoundException;
 import com.springframework.recipeapp.model.Recipe;
 import com.springframework.recipeapp.service.RecipeService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 @RequestMapping("/recipe")
 public class RecipeController {
+
+    private static final String RECIPE_RECIPEFORM_URL = "recipe/recipeform";
 
     private final RecipeService recipeService;
 
@@ -37,7 +41,7 @@ public class RecipeController {
     public String newRecipe(Model model) {
         model.addAttribute("recipe", new RecipeCommand());
 
-        return "recipe/recipeform";
+        return RECIPE_RECIPEFORM_URL;
     }
 
     @GetMapping("/{id}/update")
@@ -45,11 +49,21 @@ public class RecipeController {
         RecipeCommand recipeCommand = recipeService.findCommandById(id);
         model.addAttribute("recipe",recipeCommand);
 
-        return "recipe/recipeform";
+        return RECIPE_RECIPEFORM_URL;
     }
 
     @PostMapping
-    public String saveOrUpdate(@ModelAttribute RecipeCommand recipeCommand) {
+    public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand recipeCommand, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+
+            bindingResult.getAllErrors().forEach(objectError -> {
+                log.debug(objectError.toString());
+            });
+
+            return RECIPE_RECIPEFORM_URL;
+        }
+
         RecipeCommand recipeCommandReturn = recipeService.saveRecipeCommand(recipeCommand);
 
         return "redirect:/recipe/" + recipeCommandReturn.getId() + "/show";
