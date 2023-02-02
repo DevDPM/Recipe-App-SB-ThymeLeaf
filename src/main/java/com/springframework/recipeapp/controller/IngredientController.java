@@ -37,9 +37,10 @@ public class IngredientController {
 
     @GetMapping
     @RequestMapping("{id}/ingredients/show")
-    public String getIngredientByRecipeId(@PathVariable String id, Model model) {
+    public String getIngredientByRecipeId(@PathVariable Long id,
+                                          Model model) {
 
-        RecipeCommand recipeCommand = recipeService.findCommandById(Long.parseLong(id));
+        RecipeCommand recipeCommand = recipeService.findCommandById(id);
         model.addAttribute("recipe", recipeCommand);
 
         // Capitalize first letter in description
@@ -69,12 +70,14 @@ public class IngredientController {
 
     @PostMapping
     @RequestMapping("/{recipeId}/ingredient/add")
-    public String saveOrUpdate(@RequestParam String uomID, @PathVariable String recipeId, @ModelAttribute IngredientCommand ingredientCommand) {
-        RecipeCommand recipeCommandReturn = recipeService.findCommandById(Long.valueOf(recipeId));
+    public String saveOrUpdate(@RequestParam Long uomID,
+                               @PathVariable Long recipeId,
+                               @ModelAttribute IngredientCommand ingredientCommand) {
+        RecipeCommand recipeCommandReturn = recipeService.findCommandById(recipeId);
 
-        UnitOfMeasureCommand uomCommand = unitOfMeasureService.findById(Long.valueOf(uomID));
+        UnitOfMeasureCommand uomCommand = unitOfMeasureService.findById(uomID);
         ingredientCommand.setUnitOfMeasure(uomCommand);
-        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        ingredientCommand.setRecipeId(recipeId);
         ingredientCommand.setRecipe(recipeCommandReturn);
 
         recipeCommandReturn.getIngredients().add(ingredientCommand);
@@ -85,20 +88,20 @@ public class IngredientController {
 
     @PostMapping
     @RequestMapping("/{recipeId}/ingredient/{id}/update")
-    public String updateById(@RequestParam String uomID,
+    public String updateById(@RequestParam Long uomID,
                              @RequestParam String ingredientDescription,
-                             @RequestParam String amount,
-                             @PathVariable String recipeId, @PathVariable String id) {
+                             @RequestParam BigDecimal amount,
+                             @PathVariable Long recipeId, @PathVariable Long id) {
 
-        IngredientCommand ingredientCommandReturn = ingredientService.findByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(id));
+        IngredientCommand ingredientCommandReturn = ingredientService.findByRecipeIdAndIngredientId(recipeId, id);
 
-        UnitOfMeasureCommand uomCommand = unitOfMeasureService.findById(Long.valueOf(uomID));
+        UnitOfMeasureCommand uomCommand = unitOfMeasureService.findById(uomID);
         ingredientCommandReturn.setUnitOfMeasure(uomCommand);
-        ingredientCommandReturn.setRecipeId(Long.valueOf(recipeId));
-        ingredientCommandReturn.setAmount(BigDecimal.valueOf(Double.parseDouble(amount)));
+        ingredientCommandReturn.setRecipeId(recipeId);
+        ingredientCommandReturn.setAmount(amount);
         ingredientCommandReturn.setDescription(ingredientDescription);
 
-        Recipe recipe = recipeService.findById(Long.valueOf(recipeId));
+        Recipe recipe = recipeService.findById(recipeId);
         RecipeCommand recipeCommand = recipeService.toRecipeCommand(recipe);
         ingredientCommandReturn.setRecipe(recipeCommand);
 
@@ -111,13 +114,11 @@ public class IngredientController {
 
     @GetMapping
     @RequestMapping("/{recipeId}/ingredient/{id}/delete")
-    public String deleteById(@PathVariable String recipeId, @PathVariable String id) {
+    public String deleteById(@PathVariable Long recipeId,
+                             @PathVariable Long id) {
 
-        final Long LONG_RECIPE_ID = Long.valueOf(recipeId);
-        final Long LONG_INGREDIENT_ID = Long.valueOf(id);
-
-        IngredientCommand ingredientCommandReturn = ingredientService.findByRecipeIdAndIngredientId(LONG_RECIPE_ID, LONG_INGREDIENT_ID);
-        RecipeCommand recipeCommand = recipeService.findCommandById(LONG_RECIPE_ID);
+        IngredientCommand ingredientCommandReturn = ingredientService.findByRecipeIdAndIngredientId(recipeId, id);
+        RecipeCommand recipeCommand = recipeService.findCommandById(recipeId);
 
         RecipeCommand updatedRecipeCommand = ingredientService.deleteById(recipeCommand.getId(), ingredientCommandReturn.getId());
 

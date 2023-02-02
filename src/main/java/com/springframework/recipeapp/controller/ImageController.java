@@ -42,8 +42,8 @@ public class ImageController {
     }
 
     @GetMapping("/recipe/{id}/recipeimage")
-    public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws IOException {
-        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(id));
+    public void renderImageFromDB(@PathVariable Long id, HttpServletResponse response) throws IOException {
+        RecipeCommand recipeCommand = recipeService.findCommandById(id);
 
         if (recipeCommand.getImage() == null) {
             File fi = new File("src/main/resources/static/images/empty_meal.png");
