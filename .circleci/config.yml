@@ -25,14 +25,14 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - recipeapp-{{ checksum "pom.xml" }}
+            - Recipe-App-SB-ThymeLeaf-{{ checksum "pom.xml" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependecies-
 
       - save_cache:
           paths:
             - ~/.m2
-          key: recipeapp-{{ checksum "pom.xml" }}
+          key: Recipe-App-SB-ThymeLeaf-{{ checksum "pom.xml" }}
 
       - run: mvn dependency:go-offline
 
