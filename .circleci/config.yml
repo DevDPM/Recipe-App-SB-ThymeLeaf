@@ -12,7 +12,7 @@ jobs:
     docker:
       - image: cimg/openjdk:java-17-openjdk
 
-    working_directory: ~/recipeapp
+    working_directory: ~/Recipe-App-SB-ThymeLeaf
 
     environment:
       # Customize the JVM maximum heap limit
